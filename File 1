@@ -10,20 +10,23 @@ from shapely.geometry import Point
 
 
 def us_accidents(filename):
-    # Create map of US
     fig, axis = plt.subplots(1, figsize=(10, 10))
-
+    
+    # Reading in US map
     states = gpd.read_file(filename)
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
+    
+    # Reading in accident CSV
     accidents = pd.read_csv('truncated_csv.csv')
-
     coordinates = zip(accidents['Start_Lng'], accidents['Start_Lat'])
-    accidents['coordinates'] = [Point(-lon, lat) for lon, lat in coordinates]
+    accidents['coordinates'] = [Point(lat, lon) for lat, lon in coordinates]
     accidents = gpd.GeoDataFrame(accidents, geometry='coordinates')
     
-    accidents.plot(ax=axis, color='red', markersize=10)
-    states.plot(ax=axis)
+    # Plotting
+    states.plot(ax=axis) 
+    accidents.plot(ax=axis, color='red', markersize=1)
+
     plt.savefig('US_Accidents.png', bbox_inches='tight')
 
 
