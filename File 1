@@ -16,20 +16,20 @@ def us_accidents(filename):
     states = gpd.read_file(filename)
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
-    accidents = gpd.read_file('US_Accidents_Dec20_Updated.csv')
-    accidents = accidents.head(20)
+    accidents = pd.read_csv('truncated_csv.csv')
 
-    states.plot(ax=axis)
-    # coordinates = zip(accidents[], )
-
+    coordinates = zip(accidents['Start_Lng'], accidents['Start_Lat'])
+    accidents['coordinates'] = [Point(-lon, lat) for lon, lat in coordinates]
+    accidents = gpd.GeoDataFrame(accidents, geometry='coordinates')
+    
     accidents.plot(ax=axis, color='red', markersize=10)
-
+    states.plot(ax=axis)
     plt.savefig('US_Accidents.png', bbox_inches='tight')
 
 
+
 def main():
-    # us_accidents('USMap.json')
-    accidents = gpd.read_file('US_Accidents_Dec20_Updated.csv')
+    us_accidents('USMap.json')
     print('yeet')
 
 
