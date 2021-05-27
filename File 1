@@ -6,7 +6,6 @@ def main():
     states = gpd.read_file('USMap.json')
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
-    # print(states.head())
     plt.savefig('US.png', bbox_inches='tight')
 if __name__ == '__main__':
     main()
