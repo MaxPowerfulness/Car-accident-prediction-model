@@ -12,30 +12,34 @@ from shapely.geometry import Point
 def us_accidents(us_map_file, accident_file):
     """
     Takes in a US map file and an accident CSV file and plots the occurances of all accidents on a map of the United States.
+    Creates a new .png of plotted accidents called "US_Accidents.png".
+
+    :param us_map_file: the .json that outlines the geometry shape of the U.S.
+    :param accident_file: the CSV file of U.S. accidents to plot.
     """
     fig, axis = plt.subplots(1, figsize=(10, 10))
-    
+
     # Reading in US map
     states = gpd.read_file(us_map_file)
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
-    
+
     # Reading in accident CSV
     accidents = pd.read_csv(accident_file)
     coordinates = zip(accidents['Start_Lng'], accidents['Start_Lat'])
     accidents['coordinates'] = [Point(lat, lon) for lat, lon in coordinates]
     accidents = gpd.GeoDataFrame(accidents, geometry='coordinates')
-    
-    # Plotting
-    states.plot(ax=axis) 
+
+    # Plot map of US and accidents
+    states.plot(ax=axis)
     accidents.plot(ax=axis, color='red', markersize=1)
 
+    # Save figure
     plt.savefig('US_Accidents.png', bbox_inches='tight')
 
 
-
 def main():
-    us_accidents('USMap.json', 'filename')
+    us_accidents('Maps/USMap.json', 'Datasets/US_Accidents_Dec20_Updated.csv')
     print('yeet')
 
 
