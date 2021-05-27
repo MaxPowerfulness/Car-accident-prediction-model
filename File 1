@@ -10,10 +10,13 @@ from shapely.geometry import Point
 
 
 def us_accidents(us_map_file, accident_file):
+    """
+    Takes in a US map file and an accident CSV file and plots the occurances of all accidents on a map of the United States.
+    """
     fig, axis = plt.subplots(1, figsize=(10, 10))
     
     # Reading in US map
-    states = gpd.read_file(accident_file)
+    states = gpd.read_file(filename)
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
     
