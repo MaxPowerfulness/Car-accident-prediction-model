@@ -7,7 +7,6 @@ def main():
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
     # print(states.head())
-    states.plot()
     plt.savefig('US.png', bbox_inches='tight')
 if __name__ == '__main__':
     main()
