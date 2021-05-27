@@ -1,11 +1,37 @@
-import pandas as pd
 import geopandas as gpd
+import numpy
+import pandas as pd
+import requests
+import seaborn
+import sklearn
+import skimage
 import matplotlib.pyplot as plt
+from shapely.geometry import Point
 
-def main():
-    states = gpd.read_file('USMap.json')
+
+def us_accidents(filename):
+    # Create map of US
+    fig, axis = plt.subplots(1, figsize=(10, 10))
+
+    states = gpd.read_file(filename)
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
-    plt.savefig('US.png', bbox_inches='tight')
+    accidents = gpd.read_file('US_Accidents_Dec20_Updated.csv')
+    accidents = accidents.head(20)
+
+    states.plot(ax=axis)
+    # coordinates = zip(accidents[], )
+
+    accidents.plot(ax=axis, color='red', markersize=10)
+
+    plt.savefig('US_Accidents.png', bbox_inches='tight')
+
+
+def main():
+    # us_accidents('USMap.json')
+    accidents = gpd.read_file('US_Accidents_Dec20_Updated.csv')
+    print('yeet')
+
+
 if __name__ == '__main__':
     main()
