@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from shapely.geometry import Point
 
 
-def us_accidents(filename):
+def us_accidents(us_map_file, accident_file):
     fig, axis = plt.subplots(1, figsize=(10, 10))
     
     # Reading in US map
@@ -18,7 +18,7 @@ def us_accidents(filename):
                     (states['NAME'] != 'Hawaii')]
     
     # Reading in accident CSV
-    accidents = pd.read_csv('truncated_csv.csv')
+    accidents = pd.read_csv(accident_file)
     coordinates = zip(accidents['Start_Lng'], accidents['Start_Lat'])
     accidents['coordinates'] = [Point(lat, lon) for lat, lon in coordinates]
     accidents = gpd.GeoDataFrame(accidents, geometry='coordinates')
@@ -32,7 +32,7 @@ def us_accidents(filename):
 
 
 def main():
-    us_accidents('USMap.json')
+    us_accidents('USMap.json', 'filename')
     print('yeet')
 
 
