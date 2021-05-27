@@ -16,7 +16,7 @@ def us_accidents(us_map_file, accident_file):
     fig, axis = plt.subplots(1, figsize=(10, 10))
     
     # Reading in US map
-    states = gpd.read_file(filename)
+    states = gpd.read_file(us_map_file)
     states = states[(states['NAME'] != 'Alaska') &
                     (states['NAME'] != 'Hawaii')]
     
