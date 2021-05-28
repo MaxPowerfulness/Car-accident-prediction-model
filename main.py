@@ -7,7 +7,7 @@ import sklearn
 import skimage
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
-ACCIDENT_FILE = 'US_Accidents_Dec20_Updated.csv'
+ACCIDENT_FILE = 'Datasets/US_Accidents_Dec20_Updated.csv'
 
 def us_accidents(us_map_file, accident_file):
     """
@@ -25,7 +25,6 @@ def us_accidents(us_map_file, accident_file):
                     (states['NAME'] != 'Hawaii')]
 
     # Reading in accident CSV
-    accidents = pd.read_csv(accident_file)
     coordinates = zip(accidents['Start_Lng'], accidents['Start_Lat'])
     accidents['coordinates'] = [Point(lat, lon) for lat, lon in coordinates]
     accidents = gpd.GeoDataFrame(accidents, geometry='coordinates')
