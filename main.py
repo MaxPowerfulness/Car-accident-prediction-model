@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from shapely.geometry import Point
 ACCIDENT_FILE = 'Datasets/US_Accidents_Dec20_Updated.csv'
 
-def us_accidents(us_map_file, accident_file):
+def us_accidents(us_map_file, accidents):
     """
     Takes in a US map file and an accident CSV file and plots the occurances of all accidents on a map of the United States.
     Creates a new .png of plotted accidents called "US_Accidents.png".
