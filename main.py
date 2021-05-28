@@ -1,5 +1,5 @@
 import geopandas as gpd
-import numpy
+import numpy as np
 import pandas as pd
 import requests
 import seaborn as sns
@@ -43,12 +43,20 @@ def us_accidents(us_map_file, accidents):
 
 
 def graph_accident_poi(accidents):
-    counts = accidents.loc[:, 'Amenity':'Turning_Loop'].sum()
-    print(counts)
-    sns.catplot(data=counts, kind='bar')  # TODO: NOT FIXED; NEED TO FIGURE OUT WAY TO BAR PLOT A PD SERIES
-    plt.xlabel('Points of Interest')
+    '''
+    Takes in a pandas df of U.S. accidents and creates a bar graph of the number of accidents reported in each
+    Point of Interest (POI). Saves the bar graph as "US_Accidents.png".
+
+    :param accidents: the read-in pandas df of the U.S. accident CSV.
+    '''
+    counts = accidents.loc[:, 'Amenity':'Turning_Loop'].sum().sort_values(ascending=True)
+    x_labels = counts.index.str.replace('_', ' ')  # Remove underscores in column names
+    sns.barplot(x=x_labels, y=counts.values)
+    plt.xticks(rotation=90)
+    plt.yticks(np.arange(0, 500000, 50000))
+    plt.xlabel('POI')
     plt.ylabel('Accident Count')
-    plt.title('Number of U.S. Accidents between 2016 and 2020 that occurred in certain Points of Interest')
+    plt.title('Number of U.S. Accidents between 2016 and 2020 that occurred in certain Points of Interest (POI)')
     plt.savefig('accident_POI.png', bbox_inches='tight')
 
 
