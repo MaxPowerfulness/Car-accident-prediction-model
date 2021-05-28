@@ -7,7 +7,7 @@ import sklearn
 import skimage
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
-
+ACCIDENT_FILE = 'US_Accidents_Dec20_Updated.csv'
 
 def us_accidents(us_map_file, accident_file):
     """
@@ -39,9 +39,10 @@ def us_accidents(us_map_file, accident_file):
 
 
 def main():
-    us_accidents('Maps/USMap.json', 'Datasets/US_Accidents_Dec20_Updated.csv')
+    accident_data = pd.read_csv(ACCIDENT_FILE)
+    us_accidents('Maps/USMap.json', accident_data)
     print('yeet')
-
+   
 
 if __name__ == '__main__':
     main()
