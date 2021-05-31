@@ -46,7 +46,7 @@ def weather_model(df):
         features, labels, 20, 6)
     # get the index of the max element in a numpy
     id_of_max = scores_mean.argmax()
-    ideal_depth = sm_tree_depths[id_of_max]
+    ideal_depth = id_of_max + 1
     score = scores_mean[id_of_max]
     score_std = sm_cv_scores_std[id_of_max]
     accuracy = accuracy_sc[id_of_max]
@@ -69,18 +69,20 @@ def predict(features, labels, model):
 
 def run_cross_validation_on_trees(X, y, max_depth, level):
     accuracy = []
-    cv_scores_std = []
-    cv_scores_mean = []
-    accuracy_scores = []
+    standard_d = []
+    mean = []
+    accuracy_sc = []
     for depth in range(1, max_depth):
         tree_model = DecisionTreeClassifier(max_depth=depth)
         cv_scores = cross_val_score(
             tree_model, X, y, cv=level, scoring='accuracy')
         accuracy.append(cv_scores)
-        cv_scores_mean.append(cv_scores.mean())
-        cv_scores_std.append(cv_scores.std())
-        accuracy_scores.append(tree_model.fit(X, y).score(X, y))
-    cv_scores_mean = np.array(cv_scores_mean)
-    cv_scores_std = np.array(cv_scores_std)
-    accuracy_scores = np.array(accuracy_scores)
-    return cv_scores_mean, cv_scores_std, accuracy_scores
+        mean.append(cv_scores.mean())
+        standard_d.append(cv_scores.std())
+        accuracy_sc.append(tree_model.fit(X, y).score(X, y))
+
+    # conver them to numpy
+    mean_np = np.array(mean)
+    std_np = np.array(standard_d)
+    acc_np = np.array(accuracy_sc)
+    return (mean_np, std_np, acc_np)
