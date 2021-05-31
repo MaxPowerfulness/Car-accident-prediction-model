@@ -9,9 +9,7 @@ from sklearn.model_selection import cross_val_score
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
 from sklearn.tree.tree import DecisionTreeRegressor
-from sklearn.externals import joblib
 sns.set()
-
 '''
 ['ID', 'Severity', 'Start_Time', 'End_Time', 'Start_Lat', 'Start_Lng',
        'End_Lat', 'End_Lng', 'Distance(mi)', 'Description', 'Number', 'Street',
@@ -24,6 +22,8 @@ sns.set()
        'Turning_Loop', 'Sunrise_Sunset', 'Civil_Twilight', 'Nautical_Twilight',
        'Astronomical_Twilight']
 '''
+
+# ask how to treat precipitation column, because it contains mostly 'nan' values
 
 
 def weather_model(df):
@@ -42,62 +42,41 @@ def weather_model(df):
     labels = df[['Severity']]
 
     # try to get the best depth of the decision tree
-    sm_tree_depths = range(1, 25)
-    sm_cv_scores_mean, sm_cv_scores_std, sm_accuracy_scores = run_cross_validation_on_trees(
-        features, labels, sm_tree_depths)
-
-    idx_max = sm_cv_scores_mean.argmax()
-
-    sm_best_tree_depth = sm_tree_depths[idx_max]
-    sm_best_tree_cv_score = sm_cv_scores_mean[idx_max]
-    sm_best_tree_cv_score_std = sm_cv_scores_std[idx_max]
-    print('The depth-{} tree achieves the best mean cross-validation accuracy {} +/- {}% on training dataset'.format(
-        sm_best_tree_depth, round(sm_best_tree_cv_score*100, 5), round(sm_best_tree_cv_score_std*100, 5)))
+    scores_mean, sm_cv_scores_std, accuracy_sc = run_cross_validation_on_trees(
+        features, labels, 20, 6)
+    # get the index of the max element in a numpy
+    id_of_max = scores_mean.argmax()
+    ideal_depth = sm_tree_depths[id_of_max]
+    score = scores_mean[id_of_max]
+    score_std = sm_cv_scores_std[id_of_max]
+    accuracy = accuracy_sc[id_of_max]
+    print('''depth: {}   \n mean accuracy : {}  \n standard deviation : {}  \n  acc_score : {}'''.format(
+        ideal_depth, round(score, 6), round(score_std, 6), round(accuracy, 5)))
     # set up the model with the best depth
-    model = DecisionTreeClassifier(max_depth=sm_best_tree_depth)
+    model = DecisionTreeClassifier(max_depth=ideal_depth)
     # predict(features, labels, model)
-    # best_depth_graphing(features, labels)
-    
-    
+
+
 def predict(features, labels, model):
     features_train, features_test, labels_train, labels_test = \
         train_test_split(features, labels, test_size=0.2)
     model.fit(features_train, labels_train)
-    # joblib.dump(model, 'car_accident.joblib') save the model into a file
     train_pred = model.predict(features_train)
     print('Train Accuracy:', accuracy_score(labels_train, train_pred))
     test_pred = model.predict(features_test)
     print('Test  Accuracy:', accuracy_score(labels_test, test_pred))
-    
-def best_depth_graphing(features, labels):
-    '''
-    this method uses the code from the ML pipeline
-    file on ED
-    '''
-    features_train, features_test, labels_train, labels_test = \
-        train_test_split(features, labels, test_size=0.2, random_state=2)
 
-    accuracies = []
-    for i in range(1, 30):
-        model = DecisionTreeClassifier(max_depth=i, random_state=1)
-        model.fit(features_train, labels_train)
-        pred_train = model.predict(features_train)
-        train_acc = accuracy_score(labels_train, pred_train)
-        pred_test = model.predict(features_test)
-        test_acc = accuracy_score(labels_test, pred_test)
-        accuracies.append({'max depth': i, 'train accuracy': train_acc,
-                           'test accuracy': test_acc})
-    accuracies = pd.DataFrame(accuracies)
 
-def run_cross_validation_on_trees(X, y, tree_depths, cv=5, scoring='accuracy'):
-    cv_scores_list = []
+def run_cross_validation_on_trees(X, y, max_depth, level):
+    accuracy = []
     cv_scores_std = []
     cv_scores_mean = []
     accuracy_scores = []
-    for depth in tree_depths:
+    for depth in range(1, max_depth):
         tree_model = DecisionTreeClassifier(max_depth=depth)
-        cv_scores = cross_val_score(tree_model, X, y, cv=cv, scoring=scoring)
-        cv_scores_list.append(cv_scores)
+        cv_scores = cross_val_score(
+            tree_model, X, y, cv=level, scoring='accuracy')
+        accuracy.append(cv_scores)
         cv_scores_mean.append(cv_scores.mean())
         cv_scores_std.append(cv_scores.std())
         accuracy_scores.append(tree_model.fit(X, y).score(X, y))
