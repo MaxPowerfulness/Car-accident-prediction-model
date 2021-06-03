@@ -7,7 +7,7 @@ import sklearn
 import skimage
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
-
+from acc_ml import Ml_Model
 
 ACCIDENT_FILE = 'Datasets/US_Accidents_Dec20_Updated.csv'
 
@@ -123,6 +123,9 @@ def main():
     graph_by_hour(accident_data)
     graph_by_week(accident_data)
     graph_by_month(accident_data)
+    current_model = Ml_Model(
+        accident_data, '', ['Bump', 'Crossing', 'Stop'], ['Severity'])
+    current_model.run_model()
     print('yeet')
 
 
