@@ -1,10 +1,7 @@
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import requests
 import seaborn as sns
-import sklearn
-import skimage
 import matplotlib.pyplot as plt
 from shapely.geometry import Point
 from acc_ml import Ml_Model
