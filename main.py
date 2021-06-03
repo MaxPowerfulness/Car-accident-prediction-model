@@ -105,7 +105,7 @@ def graph_by_month(accidents):
     """
     accidents = accidents.loc[:, 'Start_Time']
     accidents = accidents.dt.month
-    sns.histplot(data=accidents, x=accidents.values, discrete=True, bins=12, kde=True, kde_kws=)
+    sns.histplot(data=accidents, x=accidents.values, discrete=True, bins=12, kde=True)
     plt.xticks(range(13))
     plt.xlabel('Month')
     plt.ylabel('Accident Count')
