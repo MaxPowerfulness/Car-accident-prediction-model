@@ -39,6 +39,194 @@ def us_accidents(us_map_file, accidents):
     plt.savefig('US_Accidents.png', bbox_inches='tight')
 
 
+def total_severity_for_all_accidents(accident_df):
+    """
+    Takes in a pandas dataframe of U.S. accidents and creates a pie chart
+    detailing the percentage of the severity of all accidents
+    """
+    # Grouping by Severity and determing counts for each level of severity
+    accident_df = accident_df.groupby('Severity').size()
+
+    # Plotting
+    fig, axis = plt.subplots(1)
+    accident_df.plot.pie(title='Percentage of Accident Severity',
+                         autopct='%1.1f%%')
+    plt.ylabel('Severity')
+    plt.savefig('Accident_Severity_Percentage_All.png')
+
+
+def precipitation_severity_correlation(accident_df):
+    """
+    Takes in a pandas dataframe of U.S. accidents and creates a stacked
+    barchart showing the correlation between precipitation levels in inches
+    and accident severity
+    """
+    # Getting rid of all NA values present in the Severity of Precipitation(in)
+    # columns
+    accident_df = accident_df.loc[:, ['Severity', 'Precipitation(in)']]
+    accident_df = accident_df.dropna()
+    # Generalizing data
+    accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
+                                    <= 0.5, '0 - 0.5',
+                                    accident_df['Precipitation(in)']))
+    accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
+                                    > 0.5, '0.51 - 1',
+                                    accident_df['Precipitation']))
+    accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
+                                    > 1, '1.1 - 2',
+                                    accident_df['Precipitation']))
+    accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
+                                    > 2, '2+', accident_df['Precipitation']))
+    # Grouping data and converting it into a dataframe
+    accident_df['Counter'] = 1
+    precipitation = (accident_df.groupby(['Precipitation', 'Severity'])
+                     ['Counter'].sum())
+    precipitation = precipitation.to_frame()
+    df = precipitation.reset_index(level=['Precipitation', 'Severity'])
+    # Creating percentages of car accident severity for each precipiation group
+    zero_to_point5 = df.loc[df['Precipitation'] == '0 - 0.5', :]
+    point5_to_one = df.loc[df['Precipitation'] == '0.51 - 1', :]
+    one_to_two = df.loc[df['Precipitation'] == '1.1 - 2', :]
+    two_above = df.loc[df['Precipitation'] == '2+', :]
+    zero_to_point5['percentage'] = ((zero_to_point5['Counter'] / zero_to_point5
+                                    ['Counter'].sum()) * 100)
+    point5_to_one['percentage'] = ((point5_to_one['Counter'] / point5_to_one
+                                   ['Counter'].sum()) * 100)
+    one_to_two['percentage'] = ((one_to_two['Counter'] /
+                                 one_to_two['Counter'].sum()) * 100)
+    two_above['percentage'] = ((two_above['Counter'] /
+                                two_above['Counter'].sum()) * 100)
+    frames = [zero_to_point5, point5_to_one, one_to_two, two_above]
+    result = pd.concat(frames)
+    # Plotting
+    fig, axs = plt.subplots(1)
+    sns.histplot(x='Precipitation', weights='percentage', hue='Severity',
+                 multiple='stack', data=result, shrink=.8)
+    plt.title('Percentage of Accident Severity for Precipitation Levels')
+    plt.ylabel('Percentage')
+    plt.xlabel('Precipitation Level (in)')
+    plt.savefig('severity_precipitation.png')
+
+
+def visibility_severity_correlation(accident_df):
+    """
+    Takes in a pandas dataframe of U.S. accidents and creates a stacked
+    barchart showing the correlation between visibility levels in miles and
+    accident severity
+    """
+    # Generalizing data
+    accident_df = accident_df.loc[accident_df['Visibility(mi)'] <= 10, :]
+    accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] <= 2,
+                                 '0 - 2', accident_df['Visibility(mi)']))
+    accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 2,
+                                 '2.1 - 4', accident_df['Visibility']))
+    accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 4,
+                                 '4.1 - 6', accident_df['Visibility']))
+    accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 6,
+                                 '6.1 - 8', accident_df['Visibility']))
+    accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 8,
+                                 '8.1 - 10', accident_df['Visibility']))
+    # Grouping data and converting it into a dataframe
+    accident_df['Counter'] = 1
+    visibility = (accident_df.groupby(['Visibility', 'Severity'])
+                  ['Counter'].sum())
+    visibility = visibility.to_frame()
+    visibility_df = visibility.reset_index(level=['Visibility', 'Severity'])
+    # Creating percentages of car accident severity for each visibility group
+    zero_two = visibility_df.loc[visibility_df['Visibility'] == '0 - 2', :]
+    two_four = visibility_df.loc[visibility_df['Visibility'] == '2.1 - 4', :]
+    four_six = visibility_df.loc[visibility_df['Visibility'] == '4.1 - 6', :]
+    six_eight = visibility_df.loc[visibility_df['Visibility'] == '6.1 - 8', :]
+    eight_ten = visibility_df.loc[visibility_df['Visibility'] == '8.1 - 10', :]
+    zero_two['percentage'] = ((zero_two['Counter'] / zero_two['Counter'].sum())
+                              * 100)
+    two_four['percentage'] = ((two_four['Counter'] / two_four['Counter'].sum())
+                              * 100)
+    four_six['percentage'] = ((four_six['Counter'] / four_six['Counter'].sum())
+                              * 100)
+    six_eight['percentage'] = ((six_eight['Counter'] /
+                                six_eight['Counter'].sum()) * 100)
+    eight_ten['percentage'] = ((eight_ten['Counter'] /
+                                eight_ten['Counter'].sum()) * 100)
+    frames = [zero_two, two_four, four_six, six_eight, eight_ten]
+    result = pd.concat(frames)
+    # Plotting
+    fig, axs = plt.subplots(1)
+    sns.histplot(x='Visibility', weights='percentage', hue='Severity',
+                 multiple='stack', data=result, shrink=.8)
+    plt.title('Percentage of Accident Severity for Visibility Levels')
+    plt.ylabel('Percentage')
+    plt.xlabel('Visibility (mi)')
+    plt.savefig('severity_visibility.png')
+
+
+def weather_condition_severity_correlation(accident_df):
+    """
+    Takes in a pandas dataframe of U.S. accidents and creates a stacked
+    barchart showing the correlation between weather conditions and accident
+    severity
+    """
+    # Cleaning and filtering data
+    accident_df = (accident_df.loc[:, ['Severity',
+                   'Weather_Condition']].dropna())
+
+    # Generalizing weather conditions
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Cloudy',
+     flags=re.IGNORECASE), 'normalized_wc']) = 'Cloudy'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains(
+     'Fog|Haze|Smoke', flags=re.IGNORECASE),
+     'normalized_wc']) = 'Reduced Visibility'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains(
+     'Rain|Drizzle|Thunder', flags=re.IGNORECASE),
+     'normalized_wc']) = 'Rain Conditions'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains(
+     'Snow|Ice|Wintry Mix', flags=re.IGNORECASE),
+     'normalized_wc']) = 'Snow Conditions'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Fair',
+     flags=re.IGNORECASE), 'normalized_wc']) = 'Fair'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Clear',
+     flags=re.IGNORECASE), 'normalized_wc']) = 'Clear'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Overcast',
+     flags=re.IGNORECASE), 'normalized_wc']) = 'Overcast'
+    generalized_df = accident_df.dropna()
+    # Grouping data and converting it into a dataframe
+    generalized_df['Counter'] = 1
+    weather_conditions = (generalized_df.groupby(['normalized_wc', 'Severity'])
+                          ['Counter'].sum())
+    weather_conditions = weather_conditions.to_frame()
+    df = weather_conditions.reset_index(level=['normalized_wc', 'Severity'])
+    # Creating percentages of car accident severity for each weather condition
+    # group
+    cloudy = df.loc[df['normalized_wc'] == 'Cloudy', :]
+    reduced_visibility = df.loc[df['normalized_wc'] == 'Reduced Visibility', :]
+    rain = df.loc[df['normalized_wc'] == 'Rain Conditions', :]
+    snow = df.loc[df['normalized_wc'] == 'Snow Conditions', :]
+    fair = df.loc[df['normalized_wc'] == 'Fair', :]
+    clear = df.loc[df['normalized_wc'] == 'Clear', :]
+    overcast = df.loc[df['normalized_wc'] == 'Overcast', :]
+    cloudy['percentage'] = (cloudy['Counter'] / cloudy['Counter'].sum()) * 100
+    reduced_visibility['percentage'] = ((reduced_visibility['Counter'] /
+                                         reduced_visibility['Counter'].sum())
+                                        * 100)
+    rain['percentage'] = (rain['Counter'] / rain['Counter'].sum()) * 100
+    snow['percentage'] = (snow['Counter'] / snow['Counter'].sum()) * 100
+    fair['percentage'] = (fair['Counter'] / fair['Counter'].sum()) * 100
+    clear['percentage'] = (clear['Counter'] / clear['Counter'].sum()) * 100
+    overcast['percentage'] = ((overcast['Counter'] / overcast['Counter'].sum())
+                              * 100)
+    frames = [fair, clear, overcast, cloudy, rain, snow, reduced_visibility]
+    result = pd.concat(frames)
+    # Plotting
+    fig, axs = plt.subplots(1, figsize=(10, 10))
+    sns.histplot(x='normalized_wc', weights='percentage', hue='Severity',
+                 multiple='stack', data=result, shrink=.8)
+    plt.xticks(rotation=-45)
+    plt.title('Percentage of Accident Severity for Weather Conditions')
+    plt.ylabel('Percentage')
+    plt.xlabel('Weather Condition')
+    plt.savefig('severity_weather_condition.png')
+
+
 def graph_accident_poi(accidents):
     """
     Takes in a pandas df of U.S. accidents and creates a bar graph of the number of accidents reported in each
@@ -116,6 +304,10 @@ def main():
     # Change Start_Times to datetime objects
     accident_data['Start_Time'] = pd.to_datetime(accident_data['Start_Time'])
     us_accidents('Maps/USMap.json', accident_data)
+    total_severity_for_all_accidents(accident_data)
+    precipitation_severity_correlation(accident_data)
+    visibility_severity_correlation(accident_data)
+    weather_condition_severity_correlation(accident_data)
     graph_accident_poi(accident_data)
     graph_by_hour(accident_data)
     graph_by_week(accident_data)
