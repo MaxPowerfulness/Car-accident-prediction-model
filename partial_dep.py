@@ -5,6 +5,7 @@ from sklearn.ensemble.partial_dependence import partial_dependence, plot_partial
 from sklearn.preprocessing import Imputer
 from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeClassifier
 
 
 class Partial_Dep:
@@ -37,5 +38,6 @@ class Partial_Dep:
                                        feature_names=['Temperature(F)', ],
                                        label=1,
                                        X=self._features)
-        print('what the heck')
+        print("the score of the partial model is: ",
+              model.score(self._features, self._labels))
         plt.savefig('partial_dep.png', bbox_inches='tight')
