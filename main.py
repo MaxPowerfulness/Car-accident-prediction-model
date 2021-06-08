@@ -1,7 +1,6 @@
 """
 Sean Gombart, Ian Lu, and Michael Christensen
 CSE 163 Accident Analyzer
-
 main.py includes one method that plots all of the accidents on a U.S. map while
 the rest graph additional visuals that show some general trends when accidents
 occur.
@@ -25,7 +24,6 @@ def us_accidents(us_map_file, accidents):
     Takes in a US map file and an accident CSV file and plots the occurrences
     of all accidents on a map of the United States.
     Creates a new .png of plotted accidents called "US_Accidents.png".
-
     :param us_map_file: the .json that outlines the geometry shape of the U.S.
     :param accidents: the pandas df of U.S. accidents
     """
@@ -50,6 +48,7 @@ def us_accidents(us_map_file, accidents):
     # Save figure
     plt.savefig('US_Accidents.png', bbox_inches='tight')
     plt.clf()
+
 
 def total_severity_for_all_accidents(accident_df):
     """
@@ -95,7 +94,7 @@ def precipitation_severity_correlation(accident_df):
                      ['Counter'].sum())
     precipitation = precipitation.to_frame()
     df = precipitation.reset_index(level=['Precipitation', 'Severity'])
-    # Creating percentages of car accident severity for each precipiation group
+    # Creating percentages of car accident severity for each precipitation group
     zero_to_point5 = df.loc[df['Precipitation'] == '0 - 0.5', :]
     point5_to_one = df.loc[df['Precipitation'] == '0.51 - 1', :]
     one_to_two = df.loc[df['Precipitation'] == '1.1 - 2', :]
@@ -244,7 +243,6 @@ def graph_accident_poi(accidents):
     Takes in a pandas df of U.S. accidents and creates a bar graph of the number
     of accidents reported in each Point of Interest (POI).
     Saves the bar graph as "US_Accidents.png".
-
     :param accidents: the read-in pandas df of the U.S. accident CSV.
     """
     counts = accidents.loc[:, 'Amenity':'Turning_Loop'].sum() \
@@ -266,7 +264,6 @@ def graph_by_hour(accidents):
     Takes in a pandas df of U.S. accidents and creates a histogram of the
     cumulative number of accidents reported during each hour of the day.
     Saves the histogram as "accidents_by_hour.png".
-
     :param accidents: the read-in pandas df of the U.S. accident CSV.
     """
     accidents = accidents.loc[:, 'Start_Time']
@@ -285,7 +282,6 @@ def graph_by_week(accidents):
      Takes in a pandas df of U.S. accidents and creates a histogram of the
      cumulative number of accidents reported during each week of the year.
      Saves the histogram as "accidents_by_week.png".
-
     :param accidents: the read-in pandas df of the U.S. accident CSV.
     """
     accidents = accidents.loc[:, 'Start_Time']
@@ -299,13 +295,12 @@ def graph_by_week(accidents):
     plt.savefig('accidents_by_week.png', bbox_inches='tight')
     plt.clf()
 
-    
+
 def graph_by_month(accidents):
     """
      Takes in a pandas df of U.S. accidents and creates a histogram of the
      cumulative number of accidents reported by month of the year.
      Saves the histogram as "accidents_by_month.png".
-
     :param accidents: the read-in pandas df of the U.S. accident CSV.
     """
     accidents = accidents.loc[:, 'Start_Time']
@@ -318,13 +313,12 @@ def graph_by_month(accidents):
     plt.savefig('accidents_by_month.png', bbox_inches='tight')
     plt.clf()
 
-    
+
 def graph_by_year(accidents):
     """
      Takes in a pandas df of U.S. accidents and creates a histogram of the
      cumulative number of accidents reported by month of the year.
      Saves the histogram as "accidents_by_year.png".
-
     :param accidents: the read-in pandas df of the U.S. accident CSV.
     """
     accidents = accidents.loc[:, 'Start_Time']
@@ -336,7 +330,7 @@ def graph_by_year(accidents):
     plt.savefig('accidents_by_year.png', bbox_inches='tight')
     plt.clf()
 
-    
+
 def main():
     accident_data = pd.read_csv(ACCIDENT_FILE)
     # Change Start_Times to datetime objects
