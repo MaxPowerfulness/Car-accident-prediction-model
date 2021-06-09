@@ -1,8 +1,9 @@
 # Car-accident-prediction-model
-Installation Instructions
+
+## Installation Instructions
 
 Download PyCharm
-	Download Anaconda
+Download Anaconda
 Create new environment (In Python 3.8) with the following modules:
 Descartes
 Geopandas
