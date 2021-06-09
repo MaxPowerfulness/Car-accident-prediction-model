@@ -52,7 +52,7 @@ class Partial_Dep:
         '''
         model = GradientBoostingClassifier(max_depth=10)
         model.fit(self._features, self._labels)
-        plot = plot_partial_dependence(model,  # plot will be saved by savefig
+        plot_partial_dependence(model,  # plot will be saved by savefig
                                        features=[0],
                                        feature_names=self._features,
                                        label=1,
