@@ -2,9 +2,9 @@
 Installation Instructions
 
 Download PyCharm
-Download Anaconda
+	Download Anaconda
 Create new environment (In Python 3.8) with the following modules:
- Descartes
+Descartes
 Geopandas
 Matplotlib
 Download following CSVs and python files:
