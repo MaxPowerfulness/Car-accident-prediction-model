@@ -1,3 +1,9 @@
+'''
+Peiyu(Ian) Lu
+This program is a class for setting up and running machine learning
+decision tree model for car severity prediction from different
+input data
+'''
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -6,27 +12,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import cross_val_score
 sns.set()
-'''
-['ID', 'Severity', 'Start_Time', 'End_Time', 'Start_Lat', 'Start_Lng',
-       'End_Lat', 'End_Lng', 'Distance(mi)', 'Description', 'Number', 'Street',
-       'Side', 'City', 'County', 'State', 'Zipcode', 'Country', 'Timezone',
-       'Airport_Code', 'Weather_Timestamp', 'Temperature(F)', 'Wind_Chill(F)',
-       'Humidity(%)', 'Pressure(in)', 'Visibility(mi)', 'Wind_Direction',
-       'Wind_Speed(mph)', 'Precipitation(in)', 'Weather_Condition', 'Amenity',
-       'Bump', 'Crossing', 'Give_Way', 'Junction', 'No_Exit', 'Railway',
-       'Roundabout', 'Station', 'Stop', 'Traffic_Calming', 'Traffic_Signal',
-       'Turning_Loop', 'Sunrise_Sunset', 'Civil_Twilight', 'Nautical_Twilight',
-       'Astronomical_Twilight']
-'''
-# purpose: find which factor contributes the most to the level of severity
-# simple: n features run model with exclusing one at a time -> find accuracy
-# shortage: many features have correlations, so removing one of the many will
-# not lead to a big change to the accruacy of the model
 
 
 class Ml_Model:
 
     def __init__(self, df, mask, features, labels):
+        '''
+        this is the initializer of the class which takes
+        in a panda dataframe df, filtering mask, features, and
+        labels for setting up the decision tree. Other variables
+        includes statistical fields for ML model.
+        The default value of statistical
+        fields is -1
+        '''
         self._mask = mask
         self._features = features
         self._df = df
@@ -38,6 +36,10 @@ class Ml_Model:
         self._split_test = -1
 
     def run_model(self):
+        '''
+        this function will finalize the features and labels
+        been passed in the ML models
+        '''
         if self._mask != '':
             self._df = self._df[eval(self._mask)]
         cols = self._features + self._labels
@@ -49,9 +51,12 @@ class Ml_Model:
 
     def set_up_model(self):
         '''
-        This function takes the features and label for target data
-        can set up a cross-validation model and a train_test_split
-        model. 
+        This function uses the features and label to
+        set up a cross-validation model from cross_model
+        function and update the statistical filed in the class.
+        Additionally, the function also get the ideal depth of the
+        decision tree for the train_test model which will be set up
+        by calling the predict function.
         '''
         # try to get the best depth of the decision tree
         sc_mean, sc_std, acc_sc = self.cross_model(
@@ -73,9 +78,10 @@ class Ml_Model:
 
     def predict(self, model):
         '''
-        This function takes in the features, labels, and ml
-        model using a train-test split method on the processing
-        the data. 
+        This function takes in the model passed in and
+        perform a train_test split on the model with a ratio
+        of train set being 80 percent, and test set being 20 percent
+        Data will be printed in the console
         '''
         features_train, features_test, labels_train, labels_test = \
             train_test_split(self._features, self._labels, test_size=0.2)
@@ -90,8 +96,8 @@ class Ml_Model:
 
     def cross_model(self, max_depth, level):
         '''
-        this function takes in features, label, max_depth, and
-        level of the cross_validation and run a cross validation
+        this function takes in max_depth, and
+        level(folds) of the cross_validation and run a cross validation
         on the given data and print out the results.
         '''
         standard_d = []
@@ -99,12 +105,15 @@ class Ml_Model:
         accuracy_sc = []
         for depth in range(1, max_depth):
             tree_model = DecisionTreeClassifier(max_depth=depth)
-            cv_scores = cross_val_score(  # cv_scores is an array consists of the scores
-                tree_model, self._features, self._labels, cv=level, scoring='accuracy')  # estimates the expected accuracy of your model on out-of-training data
+            cv_scores = cross_val_score(  # cv_scores is an arrayof the scores
+                tree_model, self._features,
+                self._labels, cv=level, scoring='accuracy')
+            # estimates the expected accuracy of your model training data
             mean.append(cv_scores.mean())
             standard_d.append(cv_scores.std())
             acc_score = tree_model.fit(
-                self._features, self._labels).score(self._features, self._labels)
+                self._features,
+                self._labels).score(self._features, self._labels)
             accuracy_sc.append(acc_score)
 
         # convert them to numpy
