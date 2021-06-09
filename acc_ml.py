@@ -1,5 +1,6 @@
 '''
-Peiyu(Ian) Lu
+Sean Gombart, Ian Lu, and Michael Christensen
+CSE 163 Accident Analyzer
 This program is a class for setting up and running machine learning
 decision tree model for car severity prediction from different
 input data
