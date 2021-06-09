@@ -1,5 +1,6 @@
 '''
-Peiyu(Ian) Lu
+Sean Gombart, Ian Lu, and Michael Christensen
+CSE 163 Accident Analyzer
 this program is a Partial_Dep class for plotting partial
 dependency plots using plot_partial_dependence(). The model and
 plot should take in one feature max to product 2d graph.
