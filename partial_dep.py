@@ -14,7 +14,6 @@ import matplotlib.pyplot as plt
 
 class Partial_Dep:
 
-
     def __init__(self, df, mask, features, labels):
         '''
         this function is the initializer of the Partial_Dep class,
@@ -28,7 +27,6 @@ class Partial_Dep:
         self._labels = labels
         self._graph_labels = features
         self._partial_score = -1
-
 
     def set_up_model(self):
         '''
@@ -46,7 +44,6 @@ class Partial_Dep:
         self._labels = self._df[self._labels]
         self.run_model()
 
-
     def run_model(self):
         '''
         this function creates a GradientBoostingClassifier
@@ -63,7 +60,6 @@ class Partial_Dep:
         score = model.score(self._features, self._labels)
         print('Gradient Boosting Classifier score:   ', score)
         plt.savefig('partial_dep.png', bbox_inches='tight')
-
 
     def get_data(self):
         '''
