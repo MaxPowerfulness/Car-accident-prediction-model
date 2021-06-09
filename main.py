@@ -47,7 +47,7 @@ def us_accidents(us_map_file, accidents):
     plt.title('U.S. Accidents between 2016-2020 (By Severity)')
 
     # Save figure
-    plt.savefig('US_Accidents.png', bbox_inches='tight')
+    plt.savefig('Images/US_Accidents.png', bbox_inches='tight')
     plt.clf()
 
 
@@ -64,7 +64,7 @@ def total_severity_for_all_accidents(accident_df):
     accident_df.plot.pie(title='Percentage of Accident Severity',
                          autopct='%1.1f%%')
     plt.ylabel('Severity')
-    plt.savefig('Accident_Severity_Percentage_All.png')
+    plt.savefig('Images/Accident_Severity_Percentage_All.png')
 
 
 def precipitation_severity_correlation(accident_df):
@@ -117,7 +117,7 @@ def precipitation_severity_correlation(accident_df):
     plt.title('Percentage of Accident Severity for Precipitation Levels')
     plt.ylabel('Percentage')
     plt.xlabel('Precipitation Level (in)')
-    plt.savefig('severity_precipitation.png')
+    plt.savefig('Images/severity_precipitation.png')
 
 
 def visibility_severity_correlation(accident_df):
@@ -169,7 +169,7 @@ def visibility_severity_correlation(accident_df):
     plt.title('Percentage of Accident Severity for Visibility Levels')
     plt.ylabel('Percentage')
     plt.xlabel('Visibility (mi)')
-    plt.savefig('severity_visibility.png')
+    plt.savefig('Images/severity_visibility.png')
 
 
 def weather_condition_severity_correlation(accident_df):
@@ -236,7 +236,7 @@ def weather_condition_severity_correlation(accident_df):
     plt.title('Percentage of Accident Severity for Weather Conditions')
     plt.ylabel('Percentage')
     plt.xlabel('Weather Condition')
-    plt.savefig('severity_weather_condition.png')
+    plt.savefig('Images/severity_weather_condition.png')
 
 
 def graph_accident_poi(accidents):
@@ -256,7 +256,7 @@ def graph_accident_poi(accidents):
     plt.ylabel('Accident Count')
     plt.title('Number of U.S. Accidents Between 2016 and 2020'
               'That Occurred in Certain Point of Interests (POI)')
-    plt.savefig('accident_POI.png', bbox_inches='tight')
+    plt.savefig('Images/accident_POI.png', bbox_inches='tight')
     plt.clf()
 
 
@@ -274,7 +274,7 @@ def graph_by_hour(accidents):
     plt.xlabel('Hour of Day')
     plt.ylabel('Accident Count')
     plt.title('Cumulative Number of Accidents That Occurred During Each Hour')
-    plt.savefig('accidents_by_hour.png', bbox_inches='tight')
+    plt.savefig('Images/accidents_by_hour.png', bbox_inches='tight')
     plt.clf()
 
 
@@ -293,7 +293,7 @@ def graph_by_week(accidents):
     plt.xlabel('Week')
     plt.ylabel('Accident Count')
     plt.title('Cumulative Number of Accidents That Occurred During Each Week')
-    plt.savefig('accidents_by_week.png', bbox_inches='tight')
+    plt.savefig('Images/accidents_by_week.png', bbox_inches='tight')
     plt.clf()
 
 
@@ -311,7 +311,7 @@ def graph_by_month(accidents):
     plt.xlabel('Month')
     plt.ylabel('Accident Count')
     plt.title('Cumulative Number of Accidents That Occurred During Each Month')
-    plt.savefig('accidents_by_month.png', bbox_inches='tight')
+    plt.savefig('Images/accidents_by_month.png', bbox_inches='tight')
     plt.clf()
 
 
@@ -328,7 +328,7 @@ def graph_by_year(accidents):
     plt.xlabel('Year')
     plt.ylabel('Accident Count')
     plt.title('Cumulative Number of Accidents That Occurred During Each Year')
-    plt.savefig('accidents_by_year.png', bbox_inches='tight')
+    plt.savefig('Images/accidents_by_year.png', bbox_inches='tight')
     plt.clf()
 
 
