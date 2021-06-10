@@ -1,4 +1,6 @@
 # Accident Analyzer
+By Michael Christensen, Ian Lu, Sean Gombart
+
 ## Description
 Accident Analyzer is a project that takes in a U.S. car accident dataset and compiles figures that highlight noticiable trends.
 Main.py includes all of the visual graphs and plots for displaying these patterns.
@@ -6,6 +8,11 @@ The project also incorporates a Machine Learning algorithm that takes in the cha
 the possible severity if an accident is to occur.
 
 ## "US-Accidents: A Countrywide Traffic Accident Dataset" Description
+This dataset that is used contains U.S. car accidents spanning between 2016 to December of 2020.
+In total, there are 2906610 accidents inside the dataset, each with descriptive data of when, where, and how the accident happened.
+Each accident is classified with a severity level bewteen 1 to 4. This is analytically based on the impact that the accident had on traffic.
+For mild accidents where traffic was not impacted, this is denoted as 1, while severe accidents that cause major delay are denoted as 4.
+To read more about the dataset, go to https://smoosavi.org/datasets/us_accidents
 
 ## Installation Instructions
 To set up the code, follow the CSE 163 software tutorial to download the exact modules with Anaconda:
