@@ -10,5 +10,9 @@ Here is the list of packages that need to be installed:
 * Descartes
 * Geopandas
 * Matplotlib
-* 
+* Scipy
+* Pandas
+* Seaborn
+* Re
+* scikit-learn
  
