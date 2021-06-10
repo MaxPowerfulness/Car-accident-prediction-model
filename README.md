@@ -43,7 +43,7 @@ Here is the list of packages that need to be installed:
  - scipy=1.3.1
  - seaborn=0.9.0
 3. 
-### Machine learning Portion:
+### Machine Learning Portion:
 
 Run the main function of the main.py
 an object of Ml_Model will be instantiated.
