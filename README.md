@@ -12,6 +12,7 @@ This dataset that is used contains U.S. car accidents spanning between 2016 to D
 In total, there are 2906610 accidents inside the dataset, each with descriptive data of when, where, and how the accident happened.
 Each accident is classified with a severity level bewteen 1 to 4. This is analytically based on the impact that the accident had on traffic.
 For mild accidents where traffic was not impacted, this is denoted as 1, while severe accidents that cause major delay are denoted as 4.
+
 To read more about the dataset, go to https://smoosavi.org/datasets/us_accidents
 
 ## Installation Instructions
