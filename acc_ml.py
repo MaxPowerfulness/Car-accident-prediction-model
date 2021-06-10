@@ -1,8 +1,7 @@
 '''
 Sean Gombart, Ian Lu, and Michael Christensen
-CSE 163 Accident Analyzer
 This program is a class for setting up and running machine learning
-decision tree model for car severity prediction from different
+models for car severity prediction from different
 input data
 '''
 import numpy as np
@@ -12,6 +11,10 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import cross_val_score
+from sklearn.inspection import plot_partial_dependence
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier
+
 sns.set()
 
 
@@ -25,16 +28,20 @@ class Ml_Model:
         includes statistical fields for ML model.
         The default value of statistical
         fields is -1
+        the features passed in should be numeric
         '''
         self._mask = mask
         self._features = features
         self._df = df
         self._labels = labels
+        self._features_list = features
+        self._labels_list = labels
         self._cv_acc = -1
         self._cv_mean = -1
         self._cv_sd = -1
         self._split_train = -1
         self._split_test = -1
+        self._ideal_depth = -1
 
     def run_model(self):
         '''
@@ -61,19 +68,14 @@ class Ml_Model:
         '''
         # try to get the best depth of the decision tree
         sc_mean, sc_std, acc_sc = self.cross_model(
-            20, 6)  # maybe try bigger number
+            15, 10)
         # get the index of the max element in a numpy
         id_of_max = sc_mean.argmax()
         ideal_depth = id_of_max + 1
         self._cv_mean = sc_mean[id_of_max]
         self._cv_sd = sc_std[id_of_max]
         self._cv_acc = acc_sc[id_of_max]
-        print('Cross_validation model results: ')
-        print('''ideal depth: {}   \nmean accuracy : {}
-            standard deviation : {}  \nacc_score : {}'''.format(
-            ideal_depth, round(self._cv_mean, 6),
-            round(self._cv_sd, 6), round(self._cv_acc, 5)))
-        # set up the model with the best depth
+        self._ideal_depth = ideal_depth
         model = DecisionTreeClassifier(max_depth=ideal_depth)
         self.predict(model)
 
@@ -82,31 +84,36 @@ class Ml_Model:
         This function takes in the model passed in and
         perform a train_test split on the model with a ratio
         of train set being 80 percent, and test set being 20 percent
-        Data will be printed in the console
+        the function will also call the plot_partial_dep with
+        the first feature in the features list as the plot
+        is only taking one feature
         '''
         features_train, features_test, labels_train, labels_test = \
             train_test_split(self._features, self._labels, test_size=0.2)
         model.fit(features_train, labels_train)
-        self._split_train = model.predict(features_train)
-        print('train_test_split model results: ')
-        print('Train Accuracy:', round(
-            accuracy_score(labels_train, self._split_train), 6))
-        self._split_test = model.predict(features_test)
-        print('Test  Accuracy:', round(
-            accuracy_score(labels_test, self._split_test), 6))
+        split_train = model.predict(features_train)
+        self._split_train = round(
+            accuracy_score(labels_train, split_train), 10)
+        split_test = model.predict(features_test)
+        self._split_test = round(
+            accuracy_score(labels_test, split_test), 10)
+        plt_col = []
+        plt_col.append(self._features_list[0])
+        self.plot_partial_dep(model, self._features, plt_col)
 
     def cross_model(self, max_depth, level):
         '''
         this function takes in max_depth, and
         level(folds) of the cross_validation and run a cross validation
-        on the given data and print out the results.
+        on the given data. The default number of
+        folds for the cross validation process will be set to 6.
         '''
         standard_d = []
         mean = []
         accuracy_sc = []
         for depth in range(1, max_depth):
             tree_model = DecisionTreeClassifier(max_depth=depth)
-            cv_scores = cross_val_score(  # cv_scores is an arrayof the scores
+            cv_scores = cross_val_score(  # cv_scores is an array of the scores
                 tree_model, self._features,
                 self._labels, cv=level, scoring='accuracy')
             # estimates the expected accuracy of your model training data
@@ -124,8 +131,50 @@ class Ml_Model:
         return (mean_np, std_np, acc_np)
 
     def get_data(self):
-        return (self._cv_acc,
-                self._cv_mean,
-                self._cv_sd,
-                self._split_train,
-                self._split_test)
+        '''
+        this function returns the statistical data of the object
+        in the form of dictionary.
+        '''
+        model_stat = {}
+        model_stat['ideal depth:  '] = round(self._ideal_depth, 10)
+        model_stat['cross val mean accuracy:  '] = round(self._cv_mean, 10)
+        model_stat['cross val standard deviation:  '] = round(self._cv_sd, 10)
+        model_stat['cross val accuracy score:  '] = round(self._cv_acc, 10)
+        model_stat['split train accuracy:  '] = round(self._split_train, 10)
+        model_stat['split test accuracy:  '] = round(self._split_test, 10)
+        return model_stat
+
+    def plot_partial_dep(self, model, features, name_list):
+        '''
+        this function takes in a model, features, and labels
+        and produce a plot_partial_dep.
+        '''
+        plot_partial_dependence(model,
+                                features,
+                                name_list,
+                                target=1)
+        plt.autoscale()
+        plt.savefig('partial_dep.png', bbox_inches='tight')
+
+    def random_forest_plot(self):
+        '''
+        this function establish a RandomForestClassifier and
+        produce a plot that represents the importance of features.
+        Make sure the features are all numeric.
+        '''
+        features_train, _, labels_train, _ = \
+            train_test_split(self._features, self._labels,
+                             test_size=0.2, random_state=0)
+        model = RandomForestClassifier(
+            n_estimators=100, n_jobs=-1, random_state=1)
+        model.fit(features_train, labels_train)
+        features = self._features_list
+        importances = model.feature_importances_
+        indices = np.argsort(importances)
+        plt.figure(figsize=(10, 15))
+        plt.title('Feature Importances')
+        plt.barh(range(len(indices)),
+                 importances[indices], color='r', align='center')
+        plt.yticks(range(len(indices)), [features[i] for i in indices])
+        plt.xlabel('Relative Importance Plot')
+        plt.savefig('importance.png', bbox_inches='tight')
