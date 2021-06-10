@@ -1,5 +1,5 @@
 # Accident Analyzer
-By Michael Christensen, Ian Lu, Sean Gombart
+By Michael Christensen, Sean Gombart, Ian Lu
 
 ## Description
 Accident Analyzer is a project that takes in a U.S. car accident dataset and compiles figures that highlight noticiable trends.
