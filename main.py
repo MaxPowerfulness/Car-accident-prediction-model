@@ -363,6 +363,7 @@ def main():
     graph_by_hour(accident_data)
     graph_by_week(accident_data)
     graph_by_month(accident_data)
+    graph_by_year(accident_data)
     features = ['Temperature(F)', 'Wind_Chill(F)',
                 'Humidity(%)', 'Pressure(in)', 'Visibility(mi)',
                 'Wind_Direction', 'Wind_Speed(mph)', 'Precipitation(in)']
