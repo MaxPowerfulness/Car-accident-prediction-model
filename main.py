@@ -95,7 +95,7 @@ def precipitation_severity_correlation(accident_df):
                      ['Counter'].sum())
     precipitation = precipitation.to_frame()
     df = precipitation.reset_index(level=['Precipitation', 'Severity'])
-    # Creating percentages of car accident severity for each precipitation group
+    # Percentages of car accident severity for each precipitation group
     zero_to_point5 = df.loc[df['Precipitation'] == '0 - 0.5', :]
     point5_to_one = df.loc[df['Precipitation'] == '0.51 - 1', :]
     one_to_two = df.loc[df['Precipitation'] == '1.1 - 2', :]
@@ -241,8 +241,8 @@ def weather_condition_severity_correlation(accident_df):
 
 def graph_accident_poi(accidents):
     """
-    Takes in a pandas df of U.S. accidents and creates a bar graph of the number
-    of accidents reported in each Point of Interest (POI).
+    Takes in a pandas df of U.S. accidents and creates a bar graph of the
+    number of accidents reported in each Point of Interest (POI).
     Saves the bar graph as "US_Accidents.png".
     :param accidents: the read-in pandas df of the U.S. accident CSV.
     """
@@ -331,7 +331,7 @@ def graph_by_year(accidents):
     plt.savefig('Images/accidents_by_year.png', bbox_inches='tight')
     plt.clf()
 
-    
+
 def print_result(dict):
     '''
     this is a helper function that takes in a dictionary
@@ -341,6 +341,7 @@ def print_result(dict):
     for x, y in dict.items():
         print(x, y)
     print()
+
 
 def main():
     accident_data = pd.read_csv(ACCIDENT_FILE)
