@@ -260,7 +260,7 @@ def graph_accident_poi(accidents):
     plt.yticks(np.arange(0, 500000, 50000))
     plt.xlabel('POI')
     plt.ylabel('Accident Count')
-    plt.title('Number of U.S. Accidents Between 2016 and 2020'
+    plt.title('Number of U.S. Accidents Between 2016 and 2020 '
               'That Occurred in Certain Point of Interests (POI)')
     plt.savefig('Images/accident_POI.png', bbox_inches='tight')
     plt.clf()
@@ -332,8 +332,9 @@ def graph_by_year(accidents):
     accidents = accidents.dt.year
     sns.histplot(data=accidents, x=accidents.values, discrete=True)
     plt.xlabel('Year')
-    plt.ylabel('Accident Count')
-    plt.title('Cumulative Number of Accidents That Occurred During Each Year')
+    plt.ylabel('Accident Count (millions)')
+    plt.title('Cumulative Number of Accidents That Occurred During Each Year',
+              y=1.08)
     plt.savefig('Images/accidents_by_year.png', bbox_inches='tight')
     plt.clf()
 
