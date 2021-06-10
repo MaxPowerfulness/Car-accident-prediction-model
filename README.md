@@ -4,8 +4,9 @@ By Michael Christensen, Ian Lu, Sean Gombart
 ## Description
 Accident Analyzer is a project that takes in a U.S. car accident dataset and compiles figures that highlight noticiable trends.
 Main.py includes all of the visual graphs and plots for displaying these patterns.
+accidents_in_Seattle.ipynb is a Google Colab notebook that contains code for plotting the heatmap of accidents in Seattle.
 The folder "/Datasets" is where the .csv files for the U.S. accidents and randomly truncated .csv belong.
-The folder "/Maps" is the geometry outline that is used for plotting the U.S. map
+The folder "/Maps" is the geometry outline that is used for plotting the U.S. map.
 The folder "/Images" contains all of the .pngs that are produced from the code.
 The project also incorporates a Machine Learning algorithm that takes in the characteristics of the environment and tries to predict
 the possible severity if an accident is to occur.
