@@ -154,7 +154,7 @@ class Ml_Model:
                                 name_list,
                                 target=1)
         plt.autoscale()
-        plt.savefig('partial_dep.png', bbox_inches='tight')
+        plt.savefig('Images/partial_dep.png', bbox_inches='tight')
 
     def random_forest_plot(self):
         '''
@@ -177,4 +177,4 @@ class Ml_Model:
                  importances[indices], color='r', align='center')
         plt.yticks(range(len(indices)), [features[i] for i in indices])
         plt.xlabel('Relative Importance Plot')
-        plt.savefig('importance.png', bbox_inches='tight')
+        plt.savefig('Images/importance.png', bbox_inches='tight')
