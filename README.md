@@ -39,9 +39,13 @@ The following packages need to be installed into the project environment with Py
  - scipy=1.3.1
  - seaborn=0.9.0
 
-Next 
 
-## Usage
+## Setting Up Accident Analyzer
+1. Download the .zip file for the repo and unzip it into a project location
+2. Download the .csv file for "US-Accidents: A Countrywide Traffic Accident Dataset" at https://www.kaggle.com/sobhanmoosavi/us-accidents and place it in the "/Datasets" folder
+   - The file should have the name "US_Accidents_Dec20_Updated.csv". If it is newer version, then change the constant "ACCIDENT_FILE" inside main.py to the new file name.
+3. In the Anaconda Prompt, specify the environment that was set up recently in the last step `conda activate [NAME_OF_ENVIRONMENT]`
+4. Run 
 
 ### Machine Learning Portion:
 
