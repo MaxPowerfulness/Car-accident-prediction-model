@@ -332,6 +332,16 @@ def graph_by_year(accidents):
     plt.savefig('Images/accidents_by_year.png', bbox_inches='tight')
     plt.clf()
 
+    
+def print_result(dict):
+    '''
+    this is a helper function that takes in a dictionary
+    and print out the statistical data of ml model
+    '''
+    print()
+    for x, y in dict.items():
+        print(x, y)
+    print()
 
 def main():
     accident_data = pd.read_csv(ACCIDENT_FILE)
@@ -350,10 +360,6 @@ def main():
     current_model = Ml_Model(accident_data, '',
                              ['Bump', 'Crossing', 'Stop'], ['Severity'])
     current_model.run_model()
-    
-    partial_dep_model = Partial_Dep(
-        accident_data, '', ['Temperature(F)'], ['Severity'])
-    partial_dep_model.set_up_model()
 
 
 if __name__ == '__main__':
