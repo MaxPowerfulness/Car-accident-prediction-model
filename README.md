@@ -1,6 +1,8 @@
 # Accident Analyzer
 ## Description
 
+## Car Accident Dataset Description
+
 ## Installation Instructions
 To set up the code, follow the CSE 163 software tutorial to download the exact modules with Anaconda:
 https://courses.cs.washington.edu/courses/cse163/20wi/software.html
