@@ -357,10 +357,14 @@ def main():
     graph_by_hour(accident_data)
     graph_by_week(accident_data)
     graph_by_month(accident_data)
-    current_model = Ml_Model(accident_data, '',
-                             ['Bump', 'Crossing', 'Stop'], ['Severity'])
+    features = ['Temperature(F)', 'Wind_Chill(F)',
+                'Humidity(%)', 'Pressure(in)', 'Visibility(mi)',
+                'Wind_Direction', 'Wind_Speed(mph)', 'Precipitation(in)']
+    current_model = Ml_Model(
+        accident_data, '', features, ['Severity'])
     current_model.run_model()
-
+    # current_model.random_forest_plot()
+    print_result(current_model.get_data())
 
 if __name__ == '__main__':
     main()
