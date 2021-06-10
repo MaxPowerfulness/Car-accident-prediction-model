@@ -1,7 +1,11 @@
 # Accident Analyzer
 ## Description
+Accident Analyzer is a project that takes in a U.S. car accident dataset and compiles figures that highlight noticiable trends.
+Main.py includes all of the visual graphs and plots for displaying these patterns.
+The project also incorporates a Machine Learning algorithm that takes in the characteristics of the environment and tries to predict
+the possible severity if an accident is to occur.
 
-## Car Accident Dataset Description
+## "US-Accidents: A Countrywide Traffic Accident Dataset" Description
 
 ## Installation Instructions
 To set up the code, follow the CSE 163 software tutorial to download the exact modules with Anaconda:
