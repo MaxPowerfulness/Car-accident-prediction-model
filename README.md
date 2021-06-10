@@ -45,7 +45,7 @@ The following packages need to be installed into the project environment with Py
 2. Download the .csv file for "US-Accidents: A Countrywide Traffic Accident Dataset" at https://www.kaggle.com/sobhanmoosavi/us-accidents and place it in the "/Datasets" folder
    - The file should have the name "US_Accidents_Dec20_Updated.csv". If it is newer version, then change the constant "ACCIDENT_FILE" inside main.py to the new file name.
 3. In the Anaconda Prompt, specify the environment that was set up recently in the last step `conda activate [NAME_OF_ENVIRONMENT]`
-4. Go to the correct directory of the project (that main.py is in) by doing `cd [FILE_DIRECTORY]
+4. Go to the correct directory of the project (that main.py is in) by doing `cd [FILE_DIRECTORY]`
 5. Run `python main.py` to run the code
 
 ### Machine Learning Portion:
