@@ -21,6 +21,7 @@ To read more about the dataset, go to https://smoosavi.org/datasets/us_accidents
 To set up the code, follow the CSE 163 software tutorial to download the exact modules with Anaconda:
 https://courses.cs.washington.edu/courses/cse163/20wi/software.html
 please refer to this [website](https://courses.cs.washington.edu/courses/cse163/20wi/software.html) for basic installation details
+
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
 the most recent [sklearn](https://scikit-learn.org/stable/install.html)
 
