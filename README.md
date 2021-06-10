@@ -4,6 +4,9 @@ By Michael Christensen, Ian Lu, Sean Gombart
 ## Description
 Accident Analyzer is a project that takes in a U.S. car accident dataset and compiles figures that highlight noticiable trends.
 Main.py includes all of the visual graphs and plots for displaying these patterns.
+The folder "/Datasets" is where the .csv files for the U.S. accidents and randomly truncated .csv belong.
+The folder "/Maps" is the geometry outline that is used for plotting the U.S. map
+The folder "/Images" contains all of the .pngs that are produced from the code.
 The project also incorporates a Machine Learning algorithm that takes in the characteristics of the environment and tries to predict
 the possible severity if an accident is to occur.
 
@@ -21,9 +24,6 @@ To read more about the dataset, go to https://smoosavi.org/datasets/us_accidents
 To set up the code, follow the CSE 163 software tutorial to download the exact modules with Anaconda:
 https://courses.cs.washington.edu/courses/cse163/20wi/software.html
 please refer to this [website](https://courses.cs.washington.edu/courses/cse163/20wi/software.html) for basic installation details
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install
-the most recent [sklearn](https://scikit-learn.org/stable/install.html)
 
 ## Usage
 
