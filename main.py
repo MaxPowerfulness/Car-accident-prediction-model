@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 import re
 from shapely.geometry import Point
 from acc_ml import Ml_Model
-from partial_dep import Partial_Dep
 
 ACCIDENT_FILE = 'Datasets/US_Accidents_Dec20_Updated.csv'
 
