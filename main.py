@@ -79,16 +79,17 @@ def precipitation_severity_correlation(accident_df):
     accident_df = accident_df.dropna()
     # Generalizing data
     accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
-                                    <= 0.5, '0 - 0.5',
-                                    accident_df['Precipitation(in)']))
+                                             <= 0.5, '0 - 0.5',
+                                             accident_df['Precipitation(in)']))
     accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
-                                    > 0.5, '0.51 - 1',
-                                    accident_df['Precipitation']))
+                                             > 0.5, '0.51 - 1',
+                                             accident_df['Precipitation']))
     accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
-                                    > 1, '1.1 - 2',
-                                    accident_df['Precipitation']))
+                                             > 1, '1.1 - 2',
+                                             accident_df['Precipitation']))
     accident_df['Precipitation'] = (np.where(accident_df['Precipitation(in)']
-                                    > 2, '2+', accident_df['Precipitation']))
+                                             > 2, '2+',
+                                             accident_df['Precipitation']))
     # Grouping data and converting it into a dataframe
     accident_df['Counter'] = 1
     precipitation = (accident_df.groupby(['Precipitation', 'Severity'])
@@ -101,9 +102,9 @@ def precipitation_severity_correlation(accident_df):
     one_to_two = df.loc[df['Precipitation'] == '1.1 - 2', :]
     two_above = df.loc[df['Precipitation'] == '2+', :]
     zero_to_point5['percentage'] = ((zero_to_point5['Counter'] / zero_to_point5
-                                    ['Counter'].sum()) * 100)
+                                     ['Counter'].sum()) * 100)
     point5_to_one['percentage'] = ((point5_to_one['Counter'] / point5_to_one
-                                   ['Counter'].sum()) * 100)
+                                    ['Counter'].sum()) * 100)
     one_to_two['percentage'] = ((one_to_two['Counter'] /
                                  one_to_two['Counter'].sum()) * 100)
     two_above['percentage'] = ((two_above['Counter'] /
@@ -129,15 +130,20 @@ def visibility_severity_correlation(accident_df):
     # Generalizing data
     accident_df = accident_df.loc[accident_df['Visibility(mi)'] <= 10, :]
     accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] <= 2,
-                                 '0 - 2', accident_df['Visibility(mi)']))
+                                          '0 - 2',
+                                          accident_df['Visibility(mi)']))
     accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 2,
-                                 '2.1 - 4', accident_df['Visibility']))
+                                          '2.1 - 4',
+                                          accident_df['Visibility']))
     accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 4,
-                                 '4.1 - 6', accident_df['Visibility']))
+                                          '4.1 - 6',
+                                          accident_df['Visibility']))
     accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 6,
-                                 '6.1 - 8', accident_df['Visibility']))
+                                          '6.1 - 8',
+                                          accident_df['Visibility']))
     accident_df['Visibility'] = (np.where(accident_df['Visibility(mi)'] > 8,
-                                 '8.1 - 10', accident_df['Visibility']))
+                                          '8.1 - 10',
+                                          accident_df['Visibility']))
     # Grouping data and converting it into a dataframe
     accident_df['Counter'] = 1
     visibility = (accident_df.groupby(['Visibility', 'Severity'])
@@ -180,26 +186,26 @@ def weather_condition_severity_correlation(accident_df):
     """
     # Cleaning and filtering data
     accident_df = (accident_df.loc[:, ['Severity',
-                   'Weather_Condition']].dropna())
+                                       'Weather_Condition']].dropna())
 
     # Generalizing weather conditions
-    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Cloudy',
-     flags=re.IGNORECASE), 'normalized_wc']) = 'Cloudy'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains(
+        'Cloudy', flags=re.IGNORECASE), 'normalized_wc']) = 'Cloudy'
     (accident_df.loc[accident_df['Weather_Condition'].str.contains(
      'Fog|Haze|Smoke', flags=re.IGNORECASE),
-     'normalized_wc']) = 'Reduced Visibility'
+        'normalized_wc']) = 'Reduced Visibility'
     (accident_df.loc[accident_df['Weather_Condition'].str.contains(
      'Rain|Drizzle|Thunder', flags=re.IGNORECASE),
-     'normalized_wc']) = 'Rain Conditions'
+        'normalized_wc']) = 'Rain Conditions'
     (accident_df.loc[accident_df['Weather_Condition'].str.contains(
      'Snow|Ice|Wintry Mix', flags=re.IGNORECASE),
-     'normalized_wc']) = 'Snow Conditions'
-    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Fair',
-     flags=re.IGNORECASE), 'normalized_wc']) = 'Fair'
-    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Clear',
-     flags=re.IGNORECASE), 'normalized_wc']) = 'Clear'
-    (accident_df.loc[accident_df['Weather_Condition'].str.contains('Overcast',
-     flags=re.IGNORECASE), 'normalized_wc']) = 'Overcast'
+        'normalized_wc']) = 'Snow Conditions'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains(
+        'Fair', flags=re.IGNORECASE), 'normalized_wc']) = 'Fair'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains(
+        'Clear', flags=re.IGNORECASE), 'normalized_wc']) = 'Clear'
+    (accident_df.loc[accident_df['Weather_Condition'].str.contains(
+        'Overcast', flags=re.IGNORECASE), 'normalized_wc']) = 'Overcast'
     generalized_df = accident_df.dropna()
     # Grouping data and converting it into a dataframe
     generalized_df['Counter'] = 1
