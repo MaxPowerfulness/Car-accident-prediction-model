@@ -13,7 +13,7 @@ In total, there are 2906610 accidents inside the dataset, each with descriptive 
 Each accident is classified with a severity level bewteen 1 to 4. This is analytically based on the impact that the accident had on traffic.
 For mild accidents where traffic was not impacted, this is denoted as 1, while severe accidents that cause major delay are denoted as 4.
 
-This .csv is too large to contain in the repo, so to download it into Datasets, you must go to https://www.kaggle.com/sobhanmoosavi/us-accidents.
+This .csv is too large to contain in the repo, so to download it into "/Datasets", you must go to https://www.kaggle.com/sobhanmoosavi/us-accidents.
 
 To read more about the dataset, go to https://smoosavi.org/datasets/us_accidents
 
