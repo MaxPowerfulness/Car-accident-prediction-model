@@ -54,7 +54,7 @@ an object of Ml_Model will be instantiated.
 The initializer will take four parameters accordingly
 (dataset needed, filtering mask for the dataset, list of features needed to set up the models, list of labels needed to set up the models)
 All the ML related program uses [randomly truncated dataset](https://raw.githubusercontent.com/MaxPowerfulness/Car-accident-prediction-model/main/Datasets/xaa.csv)
-
+the ML testing uses [another random dataset](https://raw.githubusercontent.com/MaxPowerfulness/Car-accident-prediction-model/main/Datasets/xab.csv)
 - For this ML project, the label should be 'Severity'
 - For this ML project, the features should be one or many of the features below
 - Temperature(F)', 'Wind_Chill(F)',
