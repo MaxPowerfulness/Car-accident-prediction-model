@@ -1,5 +1,5 @@
 # Accident Analyzer
-By Michael Christensen, Sean Gombart, Ian Lu
+By Michael Christensen, Ian Lu, Sean Gombart
 
 ## Description
 Accident Analyzer is a project that takes in a U.S. car accident dataset and compiles figures that highlight noticiable trends.
@@ -45,7 +45,8 @@ The following packages need to be installed into the project environment with Py
 2. Download the .csv file for "US-Accidents: A Countrywide Traffic Accident Dataset" at https://www.kaggle.com/sobhanmoosavi/us-accidents and place it in the "/Datasets" folder
    - The file should have the name "US_Accidents_Dec20_Updated.csv". If it is newer version, then change the constant "ACCIDENT_FILE" inside main.py to the new file name.
 3. In the Anaconda Prompt, specify the environment that was set up recently in the last step `conda activate [NAME_OF_ENVIRONMENT]`
-4. Run 
+4. Go to the correct directory of the project (that main.py is in) by doing `cd [FILE_DIRECTORY]
+5. Run `python main.py` to run the code
 
 ### Machine Learning Portion:
 
@@ -54,7 +55,7 @@ an object of Ml_Model will be instantiated.
 The initializer will take four parameters accordingly
 (dataset needed, filtering mask for the dataset, list of features needed to set up the models, list of labels needed to set up the models)
 All the ML related program uses [randomly truncated dataset](https://raw.githubusercontent.com/MaxPowerfulness/Car-accident-prediction-model/main/Datasets/xaa.csv)
-the ML testing uses [another random dataset](https://raw.githubusercontent.com/MaxPowerfulness/Car-accident-prediction-model/main/Datasets/xab.csv)
+
 - For this ML project, the label should be 'Severity'
 - For this ML project, the features should be one or many of the features below
 - Temperature(F)', 'Wind_Chill(F)',
